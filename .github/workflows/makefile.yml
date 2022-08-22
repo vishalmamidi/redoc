@@ -2,9 +2,8 @@
 name: Deploy static content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: [$default-branch , main]
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -24,7 +23,7 @@ jobs:
   # Single deploy job since we're just deploying
   deploy:
     environment:
-      name: github-pages2
+      name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
@@ -35,16 +34,13 @@ jobs:
 
       - run: |
           make
-          cd ./out
-          tree --prune -H '.' -L 1 --noreport --charset utf-8 -P "*.html" -I index.html -o index.html
-          cd ..
+          ( cd out ; tree -H '.' -L 1 --noreport --charset utf-8 -P "*.html" -I index.html -o index.html )
 
       - name: Setup Pages
         uses: actions/configure-pages@v1
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          # Upload entire repository
           path: './out/.'
       - name: Deploy to GitHub Pages
         id: deployment
