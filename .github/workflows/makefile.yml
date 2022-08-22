@@ -33,8 +33,11 @@ jobs:
 
       - run: npm i -g redoc-cli
 
-      - run: make
-
+      - run: |
+          make
+          cd ./out
+          tree --prune -H '.' -L 1 --noreport --charset utf-8 -P "*.html" -I index.html -o index.html
+          cd ..
 
       - name: Setup Pages
         uses: actions/configure-pages@v1
