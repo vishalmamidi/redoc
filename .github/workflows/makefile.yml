@@ -31,11 +31,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v1
-
-
-      - run: \  
-          npm i -g redoc-cli
+      - run: npm i -g redoc-cli
         
       - name: Setup Pages
         uses: actions/configure-pages@v1
